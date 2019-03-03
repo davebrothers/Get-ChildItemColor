@@ -1,12 +1,13 @@
 $OriginalForegroundColor = $Host.UI.RawUI.ForegroundColor
 if ([System.Enum]::IsDefined([System.ConsoleColor], 1) -eq "False") { $OriginalForegroundColor = "Gray" }
 
-$CompressedList = @(".7z", ".gz", ".rar", ".tar", ".zip")
-$ExecutableList = @(".exe", ".bat", ".cmd", ".py", ".pl", ".ps1",
-                    ".psm1", ".vbs", ".rb", ".reg", ".fsx", ".sh")
-$DllPdbList = @(".dll", ".pdb")
-$TextList = @(".csv", ".log", ".markdown", ".rst", ".txt")
-$ConfigsList = @(".cfg", ".conf", ".config", ".ini", ".json")
+$CompressedList = @(".7z", ".gz", ".jar", ".nupkg", ".rar", ".tar", ".tgz", ".zip")
+$ExecutableList = @(".exe", ".bat", ".cmd", ".csx", ".lua", ".mk", ".py", ".pl", ".ps1",
+                    ".psm1", ".vbs", ".rb", ".reg", ".fsscript", ".fsx", ".sh", ".w32")
+$DllPdbList = @(".dll", ".lib", ".o", ".obj", ".pdb")
+$TextList = @(".csv", ".log", ".markdown", ".md", ".rst", ".txt")
+$ConfigsList = @(".bash_profile", ".bashrc", ".cfg", ".conf", ".config", ".csproj", ".dbproj", ".editorconfig", ".fsproj", ".gitattributes", ".gitconfig", ".gitignore", ".ini", ".json", ".npmrc", ".nuspec", ".psd1", ".resx", ".suo", ".toml", ".vbproj", ".vcproj", ".vcxproj", ".viminfo", ".xml", ".yaml", ".yml")
+$CodeList = @(".asax", ".asp", ".aspx", ".c", ".class", ".cpp", ".cshtml", ".css", ".cxx", ".dbml", ".diff", ".dpj", ".dtd", ".edmx", ".fs", ".fsi", ".h", ".hh", ".hdl", ".hpp", ".hrc", ".html", ".hxx", ".inc", ".inl", ".java", ".js", ".jsp", ".jspf", ".jsx", ".less", ".map", ".sass", ".scss", ".sln", ".snippet", ".sql", ".ts", ".vb", ".vbg", ".vbx", ".vbz", ".xaml")
 
 $ColorTable = @{}
 
@@ -33,6 +34,9 @@ ForEach ($Extension in $ConfigsList) {
     $ColorTable.Add($Extension, "DarkYellow")
 }
 
+ForEach ($Extension in $CodeList) {
+    $ColorTable.Add($Extension, "DarkCyan")
+}
 
 Function Get-Color($Item) {
     $Key = 'Default'
