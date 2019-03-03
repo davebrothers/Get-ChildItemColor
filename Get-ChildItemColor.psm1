@@ -3,11 +3,17 @@ if ([System.Enum]::IsDefined([System.ConsoleColor], 1) -eq "False") { $OriginalF
 
 $CompressedList = @(".7z", ".gz", ".jar", ".nupkg", ".rar", ".tar", ".tgz", ".zip")
 $ExecutableList = @(".exe", ".bat", ".cmd", ".csx", ".lua", ".mk", ".py", ".pl", ".ps1",
-                    ".psm1", ".vbs", ".rb", ".reg", ".fsscript", ".fsx", ".sh", ".w32")
-$DllPdbList = @(".dll", ".lib", ".o", ".obj", ".pdb")
+    ".vbs", ".rb", ".reg", ".fsscript", ".fsx", ".sh", ".w32")
+$DllPdbList = @(".dll", ".lib", ".o", ".obj", ".pdb", ".psm1")
 $TextList = @(".csv", ".log", ".markdown", ".md", ".rst", ".txt")
-$ConfigsList = @(".bash_profile", ".bashrc", ".cfg", ".conf", ".config", ".csproj", ".dbproj", ".editorconfig", ".fsproj", ".gitattributes", ".gitconfig", ".gitignore", ".ini", ".json", ".npmrc", ".nuspec", ".psd1", ".resx", ".suo", ".toml", ".vbproj", ".vcproj", ".vcxproj", ".viminfo", ".xml", ".yaml", ".yml")
-$CodeList = @(".asax", ".asp", ".aspx", ".c", ".class", ".cpp", ".cshtml", ".css", ".cxx", ".dbml", ".diff", ".dpj", ".dtd", ".edmx", ".fs", ".fsi", ".h", ".hh", ".hdl", ".hpp", ".hrc", ".html", ".hxx", ".inc", ".inl", ".java", ".js", ".jsp", ".jspf", ".jsx", ".less", ".map", ".sass", ".scss", ".sln", ".snippet", ".sql", ".ts", ".vb", ".vbg", ".vbx", ".vbz", ".xaml")
+$ConfigsList = @(".bash_profile", ".bashrc", ".cfg", ".conf", ".config", ".csproj", ".dbproj", 
+    ".editorconfig", ".fsproj", ".gitattributes", ".gitconfig", ".gitignore", ".ini", ".json", 
+    ".npmrc", ".nuspec", ".psd1", ".resx", ".suo", ".toml", ".vbproj", ".vcproj", ".vcxproj", 
+    ".viminfo", ".xml", ".yaml", ".yml")
+$CodeList = @(".asax", ".asp", ".aspx", ".c", ".class", ".cpp", ".cshtml", ".css", ".cxx", 
+    ".dbml", ".diff", ".dpj", ".dtd", ".edmx", ".fs", ".fsi", ".h", ".hh", ".hdl", ".hpp", ".hrc", 
+    ".html", ".hxx", ".inc", ".inl", ".java", ".js", ".jsp", ".jspf", ".jsx", ".less", ".map", ".sass", 
+    ".scss", ".sln", ".snippet", ".sql", ".ts", ".vb", ".vbg", ".vbx", ".vbz", ".xaml")
 
 $ColorTable = @{}
 
@@ -43,7 +49,8 @@ Function Get-Color($Item) {
 
     If ($Item.GetType().Name -eq 'DirectoryInfo') {
         $Key = 'Directory'
-    } Else {
+    }
+    Else {
         If ($Item.PSobject.Properties.Name -contains "Extension") {
             If ($ColorTable.ContainsKey($Item.Extension)) {
                 $Key = $Item.Extension
@@ -106,7 +113,8 @@ Function Get-ChildItemColorFormatWide {
                 $ParentType = "Hive"
                 $ParentName = $Item.PSParentPath.Replace("Microsoft.PowerShell.Core\Registry::", "")
             }
-        } Else {
+        }
+        Else {
             $ParentType = ""
             $ParentName = ""
             $LastParentName = $ParentName
@@ -115,7 +123,8 @@ Function Get-ChildItemColorFormatWide {
         $Color = Get-Color $Item
 
         If ($LastParentName -ne $ParentName) {
-            If($i -ne 0 -AND $Host.UI.RawUI.CursorPosition.X -ne 0){  # conditionally add an empty line
+            If ($i -ne 0 -AND $Host.UI.RawUI.CursorPosition.X -ne 0) {
+                # conditionally add an empty line
                 Write-Host ""
             }
             Write-Host -Fore $OriginalForegroundColor ("`n   $($ParentType): $ParentName`n")
@@ -138,7 +147,8 @@ Function Get-ChildItemColorFormatWide {
         $LastParentName = $ParentName
     }
 
-    If ($nnl) {  # conditionally add an empty line
+    If ($nnl) {
+        # conditionally add an empty line
         Write-Host ""
         Write-Host ""
     }
